@@ -46,7 +46,7 @@ export const checkSubscription = (id) => async (dispatch, getState) => {
       },
     });
 
-    console.log(data);
+    // console.log(data);
 
     dispatch({
       type: SET_SUBSCRIPTION,

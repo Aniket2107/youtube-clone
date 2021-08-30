@@ -73,27 +73,33 @@ const Video = ({ video, channelScreen }) => {
     history.push(`/watch/${_videoId}`);
   };
 
-  return (
-    <div className="video" onClick={handleClick}>
-      <div className="video_top">
-        {/* <img src={medium.url} alt="video-thumbnail" /> */}
-        <LazyLoadImage src={medium.url} effect="blur" alt="video-thumbnail" />
-        <span className="video_top_duration">{_duration}</span>
-      </div>
-      <div className="video_title">{title}</div>
-      <div className="video_details">
-        <span>
-          <AiFillEye /> {numeral(views).format("0.a")} Views •
-        </span>
+  const handleChannelClick = () => {
+    history.push(`/channel/${channelId}`);
+  };
 
-        <span>
-          {"        "}
-          {moment(publishedAt).fromNow()}
-        </span>
+  return (
+    <div className="video">
+      <div onClick={handleClick}>
+        <div className="video_top">
+          {/* <img src={medium.url} alt="video-thumbnail" /> */}
+          <LazyLoadImage src={medium.url} effect="blur" alt="video-thumbnail" />
+          <span className="video_top_duration">{_duration}</span>
+        </div>
+        <div className="video_title">{title}</div>
+        <div className="video_details">
+          <span>
+            <AiFillEye /> {numeral(views).format("0.a")} Views •
+          </span>
+
+          <span>
+            {"        "}
+            {moment(publishedAt).fromNow()}
+          </span>
+        </div>
       </div>
 
       {!channelScreen && (
-        <div className="video_channel">
+        <div className="video_channel" onClick={handleChannelClick}>
           {/* <img src={channelIcon?.url} alt="channel-avatar" /> */}
           <LazyLoadImage
             src={channelIcon?.url}

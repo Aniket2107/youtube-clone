@@ -26,7 +26,11 @@ const SearchScreen = () => {
           <VideoHorizontal video={video} key={video.id.videoId} searchScreen />
         ))
       ) : (
-        <SkeletonTheme color="#343a40" highlightColor="#3c4147">
+        <SkeletonTheme
+          color="#343a40"
+          highlightColor="#3c4147"
+          key={Math.random()}
+        >
           <Skeleton width="100%" height="130px" count={15} />
         </SkeletonTheme>
       )}

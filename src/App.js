@@ -8,6 +8,7 @@ import Header from "./components/header/Header";
 import SideBar from "./components/sidebar/SideBar";
 import ChannelScreen from "./screens/channelScreen/ChannelScreen";
 import HomeScreen from "./screens/HomeScreen";
+import LikedVideos from "./screens/likedVideos/LikedVideos";
 import Login from "./screens/login/Login";
 import SearchScreen from "./screens/SearchScreen";
 import SubscriptionScreen from "./screens/subscription/SubscriptionScreen";
@@ -80,6 +81,12 @@ const App = () => {
       <Route path="/channel/:channelId" exact>
         <Layout>
           <ChannelScreen />
+        </Layout>
+      </Route>
+
+      <Route path="/feed/liked-videos" exact>
+        <Layout>
+          <LikedVideos />
         </Layout>
       </Route>
 

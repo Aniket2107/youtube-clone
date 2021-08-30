@@ -9,7 +9,10 @@ import Video from "../../components/video/Video";
 
 import "./_channelScreen.scss";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
-import { getChannelDetails } from "../../redux/actions/channelActions";
+import {
+  checkSubscription,
+  getChannelDetails,
+} from "../../redux/actions/channelActions";
 import numeral from "numeral";
 
 const ChannelScreen = () => {
@@ -20,6 +23,7 @@ const ChannelScreen = () => {
   useEffect(() => {
     dispatch(getVideosByChannelId(channelId));
     dispatch(getChannelDetails(channelId));
+    dispatch(checkSubscription(channelId));
   }, [dispatch, channelId]);
 
   const { videos, loading } = useSelector((state) => state.channelVideos);
@@ -56,7 +60,9 @@ const ChannelScreen = () => {
           </div>
         </div>
 
-        <button className={`${isSubscribed ? "btn-gray" : ""}`}>
+        <button
+          className={`btn ${isSubscribed ? "btn-secondary" : "btn-danger"}`}
+        >
           {isSubscribed ? "Subscribed" : "Subscribe"}
         </button>
       </div>
@@ -64,13 +70,13 @@ const ChannelScreen = () => {
       <Container>
         <Row className="mt-2">
           {!loading
-            ? videos?.map((video) => (
-                <Col md={4} lg={3}>
+            ? videos?.map((video, idx) => (
+                <Col md={4} lg={3} key={idx}>
                   <Video video={video} channelScreen />
                 </Col>
               ))
             : [...Array(15)].map(() => (
-                <Col md={4} lg={3}>
+                <Col md={4} lg={3} key={Math.random() * 10}>
                   <SkeletonTheme color="#343a40" highlightColor="#3c4147">
                     <Skeleton width="100%" height="140px" />
                   </SkeletonTheme>

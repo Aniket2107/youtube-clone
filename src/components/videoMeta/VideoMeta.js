@@ -13,6 +13,8 @@ import {
   checkSubscription,
   getChannelDetails,
 } from "../../redux/actions/channelActions";
+import CustomHelmet from "../CustomHelmet";
+import { useHistory } from "react-router-dom";
 
 const VideoMeta = ({ video, videoId }) => {
   const { channelId, channelTitle, description, title, publishedAt } =
@@ -20,6 +22,7 @@ const VideoMeta = ({ video, videoId }) => {
   const { viewCount, likeCount, dislikeCount } = video?.statistics;
 
   const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
     dispatch(getChannelDetails(channelId));
@@ -37,8 +40,14 @@ const VideoMeta = ({ video, videoId }) => {
 
   const isSubscribed = data.subscriptionStatus;
 
+  const handleChannelClick = () => {
+    history.push(`/channel/${channelId}`);
+  };
+
   return (
     <div className="videoMetaData pb-3">
+      <CustomHelmet title={title} description={description} />
+
       <div className="videoMetaData__top">
         <h5>{title}</h5>
         <div className="d-flex justify-content-between align-items-center py-1">
@@ -61,7 +70,7 @@ const VideoMeta = ({ video, videoId }) => {
         </div>
       </div>
       <div className="videoMetaData__channel d-flex justify-content-between align-items-center my-2 py-3">
-        <div className="d-flex">
+        <div className="d-flex" onClick={handleChannelClick}>
           <img
             src={channelSnippet?.thumbnails?.default?.url}
             alt="channel-thumbnail"

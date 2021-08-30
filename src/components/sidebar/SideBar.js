@@ -4,11 +4,11 @@ import {
   MdSubscriptions,
   MdExitToApp,
   MdThumbUp,
-  MdHistory,
   MdHome,
-  // MdSentimentDissatisfied,
-  MdLibraryBooks,
 } from "react-icons/md";
+
+import { FaGithub } from "react-icons/fa";
+
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../../redux/actions/authAction";
@@ -41,20 +41,28 @@ const SideBar = ({ sideBar, handleSideBar }) => {
         </li>
       </Link>
 
-      <li>
-        <MdThumbUp size={23} />
-        <span>Liked Videos</span>
-      </li>
+      <Link to="/feed/liked-videos">
+        <li>
+          <MdThumbUp size={23} />
+          <span>Liked Videos</span>
+        </li>
+      </Link>
 
-      <li>
-        <MdHistory size={23} />
-        <span>History</span>
-      </li>
-
+      <a
+        href="https://github.com/Aniket2107/youtube-clone"
+        target="_blank"
+        rel="noreferrer"
+      >
+        <li>
+          <FaGithub size={23} />
+          <span>Project Repo.</span>
+        </li>
+      </a>
+      {/*
       <li>
         <MdLibraryBooks size={23} />
         <span>Library</span>
-      </li>
+      </li> */}
 
       <hr />
       <li onClick={handleLogout}>

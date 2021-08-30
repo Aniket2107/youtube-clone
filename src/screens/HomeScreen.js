@@ -10,6 +10,7 @@ import CategoryBar from "../components/categoryBar/CategoryBar";
 import Video from "../components/video/Video";
 import {
   getPopularVideos,
+  getUserLikedVideos,
   getVideosByCategory,
 } from "../redux/actions/videoActions";
 import LoadSkeleton from "../components/loader/LoadSkeleton";
@@ -23,6 +24,7 @@ const HomeScreen = () => {
 
   useEffect(() => {
     dispatch(getPopularVideos());
+    dispatch(getUserLikedVideos());
   }, [dispatch]);
 
   const fetchNextData = () => {

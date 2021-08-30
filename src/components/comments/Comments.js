@@ -38,13 +38,15 @@ const Comments = ({ videoId, totalComments }) => {
     setUserComment("");
   };
 
+  const { user } = useSelector((state) => state.auth);
+
   return (
     <div className="comments">
       <p>{totalComments} comments</p>
       <div className="comments__form d-flex w-100 my-2">
         <img
-          src="https://png2.cleanpng.com/sh/d49bb7b7fe415f7d3a0ce116ba06fb96/L0KzQYm3VsI3N6Z8i5H0aYP2gLBuTfF3aaVmip9Ac3X1PbT2jgB2fJZ3Rdtsb372PcT2hwR4aaNqRdZudnXvf8Hskr02amQ3T9VsOXPmQYbtV745P2M8SqkDMEG4Q4G3U8U1OGI9S6g3cH7q/kisspng-avatar-user-computer-icons-software-developer-5b327cc9cc15f7.872727801530035401836.png"
-          alt=""
+          src={user?.photoUrl}
+          alt="avatar"
           className="rounded-circle mr-3"
         />
         <form onSubmit={handleSubmit} className="d-flex flex-grow-1">

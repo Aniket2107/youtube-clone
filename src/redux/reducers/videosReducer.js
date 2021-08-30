@@ -17,6 +17,9 @@ import {
   SUBSCRIPTION_CHANNEL_FAIL,
   SUBSCRIPTION_CHANNEL_REQ,
   SUBSCRIPTION_CHANNEL_SUCCESS,
+  USER_LIKEDVIDEO_FAIL,
+  USER_LIKEDVIDEO_REQ,
+  USER_LIKEDVIDEO_SUCCESS,
 } from "../types";
 
 const homeVideoInitialState = {
@@ -211,7 +214,33 @@ export const channelVideosReducer = (state = relatedVideoState, action) => {
     case CHANNEL_VIDEO_FAIL:
       return {
         ...state,
-        videos: [],
+        loading: false,
+        error: action.payload,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const likedVideosReducer = (state = relatedVideoState, action) => {
+  switch (action.type) {
+    case USER_LIKEDVIDEO_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        videos: action.payload,
+      };
+
+    case USER_LIKEDVIDEO_REQ:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case USER_LIKEDVIDEO_FAIL:
+      return {
+        ...state,
         loading: false,
         error: action.payload,
       };

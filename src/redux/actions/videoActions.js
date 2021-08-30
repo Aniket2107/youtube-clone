@@ -17,6 +17,9 @@ import {
   SUBSCRIPTION_CHANNEL_FAIL,
   SUBSCRIPTION_CHANNEL_REQ,
   SUBSCRIPTION_CHANNEL_SUCCESS,
+  USER_LIKEDVIDEO_FAIL,
+  USER_LIKEDVIDEO_REQ,
+  USER_LIKEDVIDEO_SUCCESS,
 } from "../types";
 
 import request from "../../api";
@@ -200,6 +203,7 @@ export const getUserSubscribedChannels = () => async (dispatch, getState) => {
       params: {
         part: "snippet, contentDetails",
         mine: true,
+        maxResults: 20,
       },
       headers: {
         Authorization: `Bearer ${getState().auth.accessToken}`,
@@ -260,6 +264,38 @@ export const getVideosByChannelId = (id) => async (dispatch) => {
 
     dispatch({
       type: CHANNEL_VIDEO_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+export const getUserLikedVideos = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: USER_LIKEDVIDEO_REQ,
+    });
+
+    const { data } = await request("/videos", {
+      params: {
+        part: "snippet,contentDetails,statistics",
+        myRating: "like",
+        maxResults: 20,
+      },
+      headers: {
+        Authorization: `Bearer ${getState().auth.accessToken}`,
+      },
+    });
+
+    // console.log(data.items);
+    dispatch({
+      type: USER_LIKEDVIDEO_SUCCESS,
+      payload: data.items,
+    });
+  } catch (error) {
+    console.error(error.message);
+
+    dispatch({
+      type: USER_LIKEDVIDEO_FAIL,
       payload: error.message,
     });
   }
