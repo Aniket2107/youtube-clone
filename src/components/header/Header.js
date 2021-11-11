@@ -2,17 +2,19 @@ import React from "react";
 
 import { FaBars } from "react-icons/fa";
 import { AiOutlineSearch } from "react-icons/ai";
-import { MdNotifications, MdApps } from "react-icons/md";
+import { MdExitToApp } from "react-icons/md";
 
 import "./_header.scss";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../redux/actions/authAction";
 
 const Header = ({ handleSideBar }) => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,6 +24,10 @@ const Header = ({ handleSideBar }) => {
     }
 
     history.push(`/search/${searchQuery}`);
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
   };
 
   const { user } = useSelector((state) => state.auth);
@@ -51,9 +57,14 @@ const Header = ({ handleSideBar }) => {
       </form>
 
       <div className="header_icons">
-        <MdNotifications size={28} />
-        <MdApps size={28} />
+        {/* <MdNotifications size={28} />
+        <MdApps size={28} /> */}
         <img src={user?.photoUrl} alt="avatar" />
+
+        <div onClick={handleLogout} className="logout">
+          <MdExitToApp size={23} />
+          <span>Logout</span>
+        </div>
       </div>
     </div>
   );

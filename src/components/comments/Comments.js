@@ -57,7 +57,9 @@ const Comments = ({ videoId, totalComments }) => {
             value={userComment}
             onChange={(e) => setUserComment(e.target.value)}
           />
-          <button className="border-0 p-2">Comment</button>
+          <button className="border-0 p-2" type="submit">
+            Comment
+          </button>
         </form>
       </div>
 

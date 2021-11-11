@@ -27,7 +27,9 @@ const WatchScreen = () => {
     dispatch(getRelatedVideos(id));
   }, [dispatch, id]);
 
-  const { video, loading } = useSelector((state) => state.selectedVideo);
+  const { video, loading, isLiked } = useSelector(
+    (state) => state.selectedVideo
+  );
 
   const relatedVideos = useSelector((state) => state.relatedVideos);
 
@@ -48,7 +50,7 @@ const WatchScreen = () => {
         </div>
 
         {!loading && video && Object.keys(video).length !== 0 ? (
-          <VideoMeta video={video} videoId={id} />
+          <VideoMeta video={video} videoId={id} isLiked={isLiked} />
         ) : (
           <h3>Loading...</h3>
         )}

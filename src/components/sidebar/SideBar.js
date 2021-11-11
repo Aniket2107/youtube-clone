@@ -1,27 +1,14 @@
 import React from "react";
 
-import {
-  MdSubscriptions,
-  MdExitToApp,
-  MdThumbUp,
-  MdHome,
-} from "react-icons/md";
+import { MdSubscriptions, MdThumbUp, MdHome } from "react-icons/md";
 
 import { FaGithub } from "react-icons/fa";
 
-import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { logout } from "../../redux/actions/authAction";
 
 import "./_sidebar.scss";
 
 const SideBar = ({ sideBar, handleSideBar }) => {
-  const dispatch = useDispatch();
-
-  const handleLogout = () => {
-    dispatch(logout());
-  };
-
   return (
     <nav
       className={sideBar ? "sidebar open" : "sidebar"}
@@ -64,12 +51,12 @@ const SideBar = ({ sideBar, handleSideBar }) => {
         <span>Library</span>
       </li> */}
 
-      <hr />
-      <li onClick={handleLogout}>
+      {/* <hr /> */}
+      {/* <li onClick={handleLogout}>
         <MdExitToApp size={23} />
         <span>Logout</span>
-      </li>
-      <hr />
+      </li> */}
+      {/* <hr /> */}
     </nav>
   );
 };

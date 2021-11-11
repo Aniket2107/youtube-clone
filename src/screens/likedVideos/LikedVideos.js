@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Video from "../../components/video/Video";
+import { getUserLikedVideos } from "../../redux/actions/videoActions";
 
 const LikedVideos = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUserLikedVideos());
+  }, [dispatch]);
+
   const { videos, loading } = useSelector((state) => state.likedVideos);
 
   return (

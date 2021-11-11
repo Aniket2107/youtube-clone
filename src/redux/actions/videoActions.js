@@ -5,6 +5,7 @@ import {
   HOME_VIDEOS_FAIL,
   HOME_VIDEOS_REQUEST,
   HOME_VIDEOS_SUCCESS,
+  RATE_SELECTED_VIDEO,
   RELATED_VIDEO_FAIL,
   RELATED_VIDEO_REQ,
   RELATED_VIDEO_SUCCESS,
@@ -12,6 +13,7 @@ import {
   SEARCH_VIDEOS_REQ,
   SEARCH_VIDEOS_SUCCESS,
   SELECTED_VIDEO_FAIL,
+  SELECTED_VIDEO_ISLIKED,
   SELECTED_VIDEO_REQ,
   SELECTED_VIDEO_SUCCESS,
   SUBSCRIPTION_CHANNEL_FAIL,
@@ -300,3 +302,57 @@ export const getUserLikedVideos = () => async (dispatch, getState) => {
     });
   }
 };
+
+export const getUserRating = (id) => async (dispatch, getState) => {
+  try {
+    const { data } = await request("/videos/getRating", {
+      params: {
+        id,
+      },
+      headers: {
+        Authorization: `Bearer ${getState().auth.accessToken}`,
+      },
+    });
+
+    // console.log(data);
+
+    let isLiked = data.items[0].rating;
+
+    isLiked = isLiked === "like" ? true : isLiked === "dislike" ? false : null;
+
+    dispatch({
+      type: SELECTED_VIDEO_ISLIKED,
+      payload: isLiked,
+    });
+  } catch (error) {
+    console.error(error.message);
+  }
+};
+
+export const LikeDisLikeVideo =
+  (videoId, rating) => async (dispatch, getState) => {
+    try {
+      let isLiked =
+        rating === "like" ? true : rating === "dislike" ? false : null;
+
+      dispatch({
+        type: RATE_SELECTED_VIDEO,
+        payload: isLiked,
+      });
+
+      const { data } = await request("/videos/rate", {
+        method: "POST",
+        params: {
+          id: videoId,
+          rating,
+        },
+        headers: {
+          Authorization: `Bearer ${getState().auth.accessToken}`,
+        },
+      });
+
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };

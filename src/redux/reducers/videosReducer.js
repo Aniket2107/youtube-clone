@@ -5,6 +5,7 @@ import {
   HOME_VIDEOS_FAIL,
   HOME_VIDEOS_REQUEST,
   HOME_VIDEOS_SUCCESS,
+  RATE_SELECTED_VIDEO,
   RELATED_VIDEO_FAIL,
   RELATED_VIDEO_REQ,
   RELATED_VIDEO_SUCCESS,
@@ -12,6 +13,7 @@ import {
   SEARCH_VIDEOS_REQ,
   SEARCH_VIDEOS_SUCCESS,
   SELECTED_VIDEO_FAIL,
+  SELECTED_VIDEO_ISLIKED,
   SELECTED_VIDEO_REQ,
   SELECTED_VIDEO_SUCCESS,
   SUBSCRIPTION_CHANNEL_FAIL,
@@ -64,6 +66,7 @@ export const homeVideoReducers = (state = homeVideoInitialState, action) => {
 
 const selectedVideoInitialState = {
   video: null,
+  isLiked: null,
   loading: false,
   error: null,
 };
@@ -92,6 +95,18 @@ export const selectedVideoReduver = (
         video: null,
         loading: false,
         error: action.payload,
+      };
+
+    case SELECTED_VIDEO_ISLIKED:
+      return {
+        ...state,
+        isLiked: action.payload,
+      };
+
+    case RATE_SELECTED_VIDEO:
+      return {
+        ...state,
+        isLiked: action.payload,
       };
 
     default:

@@ -27,9 +27,12 @@ const Login = () => {
         <img
           src="http://pngimg.com/uploads/youtube/youtube_PNG2.png"
           alt="youtube-thumbnail"
+          className="thumbnail"
         />
-        <button onClick={handleLogin}>Login with Google</button>
-        <p>
+        <button onClick={handleLogin} className="login-with-google-btn">
+          Login with Google
+        </button>
+        {/* <p>
           This project is made by{" "}
           <a
             href="https://github.com/Aniket2107"
@@ -38,7 +41,7 @@ const Login = () => {
           >
             Aniket Habib
           </a>{" "}
-        </p>
+        </p> */}
       </div>
     </div>
   );

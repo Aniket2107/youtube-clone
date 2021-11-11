@@ -3,6 +3,7 @@ import {
   CHANNEL_DETAILS_REQ,
   CHANNEL_DETAILS_SUCCESS,
   SET_SUBSCRIPTION,
+  SET_SUBSID,
 } from "../types";
 
 const channelInitialState = {
@@ -10,6 +11,7 @@ const channelInitialState = {
   loading: false,
   error: null,
   subscriptionStatus: false,
+  subscriptionId: null,
 };
 
 export const channelDetailsReducer = (state = channelInitialState, action) => {
@@ -39,6 +41,12 @@ export const channelDetailsReducer = (state = channelInitialState, action) => {
       return {
         ...state,
         subscriptionStatus: action.payload,
+      };
+
+    case SET_SUBSID:
+      return {
+        ...state,
+        subscriptionId: action.payload,
       };
 
     default:

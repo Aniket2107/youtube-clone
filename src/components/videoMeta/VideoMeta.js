@@ -12,11 +12,17 @@ import "./_videoMeta.scss";
 import {
   checkSubscription,
   getChannelDetails,
+  subscribeChannel,
+  unSubscribeChannel,
 } from "../../redux/actions/channelActions";
 import CustomHelmet from "../CustomHelmet";
 import { useHistory } from "react-router-dom";
+import {
+  getUserRating,
+  LikeDisLikeVideo,
+} from "../../redux/actions/videoActions";
 
-const VideoMeta = ({ video, videoId }) => {
+const VideoMeta = ({ video, videoId, isLiked }) => {
   const { channelId, channelTitle, description, title, publishedAt } =
     video?.snippet;
   const { viewCount, likeCount, dislikeCount } = video?.statistics;
@@ -27,7 +33,8 @@ const VideoMeta = ({ video, videoId }) => {
   useEffect(() => {
     dispatch(getChannelDetails(channelId));
     dispatch(checkSubscription(channelId));
-  }, [dispatch, channelId]);
+    dispatch(getUserRating(videoId));
+  }, [dispatch, channelId, videoId]);
 
   const data = useSelector((state) => state.channelDetails);
 
@@ -44,6 +51,20 @@ const VideoMeta = ({ video, videoId }) => {
     history.push(`/channel/${channelId}`);
   };
 
+  const handleLikeDislike = (rating) => {
+    if (rating === "dislike" && isLiked === false) rating = "none";
+    else if (rating === "like" && isLiked === true) rating = "none";
+    dispatch(LikeDisLikeVideo(videoId, rating));
+  };
+
+  const handleSubscribeBtn = () => {
+    if (isSubscribed) {
+      dispatch(unSubscribeChannel(data.subscriptionId));
+    } else {
+      dispatch(subscribeChannel(data.channel.id));
+    }
+  };
+
   return (
     <div className="videoMetaData pb-3">
       <CustomHelmet title={title} description={description} />
@@ -58,12 +79,20 @@ const VideoMeta = ({ video, videoId }) => {
 
           <div>
             <span className="m-3">
-              <MdThumbUp size={26} />
+              <MdThumbUp
+                size={26}
+                style={{ color: `${isLiked ? "blue" : "white"}` }}
+                onClick={() => handleLikeDislike("like")}
+              />
               {numeral(likeCount).format("0.a")}
             </span>
 
             <span className="mr-3">
-              <MdThumbDown size={26} />
+              <MdThumbDown
+                size={26}
+                style={{ color: `${isLiked === false ? "blue" : "white"}` }}
+                onClick={() => handleLikeDislike("dislike")}
+              />
               {numeral(dislikeCount).format("0.a")}
             </span>
           </div>
@@ -87,6 +116,7 @@ const VideoMeta = ({ video, videoId }) => {
 
         <button
           className={`btn border-0 p-2 m-2 ${isSubscribed ? "btn-gray" : ""}`}
+          onClick={handleSubscribeBtn}
         >
           {isSubscribed ? "Subscribed" : "Subscribe"}
         </button>

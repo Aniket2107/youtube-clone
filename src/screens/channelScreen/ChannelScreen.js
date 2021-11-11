@@ -12,6 +12,8 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import {
   checkSubscription,
   getChannelDetails,
+  subscribeChannel,
+  unSubscribeChannel,
 } from "../../redux/actions/channelActions";
 import numeral from "numeral";
 
@@ -42,6 +44,14 @@ const ChannelScreen = () => {
   const { snippet, statistics } = channelData.channel;
   const isSubscribed = channelData.subscriptionStatus;
 
+  const handleSubscribeBtn = () => {
+    if (isSubscribed) {
+      dispatch(unSubscribeChannel(channelData.subscriptionId));
+    } else {
+      dispatch(subscribeChannel(channelData.channel.id));
+    }
+  };
+
   return (
     <>
       <div className="px-5 py-2 my-2 d-flex justify-content-between align-items-center channelHeader">
@@ -62,6 +72,7 @@ const ChannelScreen = () => {
 
         <button
           className={`btn ${isSubscribed ? "btn-secondary" : "btn-danger"}`}
+          onClick={handleSubscribeBtn}
         >
           {isSubscribed ? "Subscribed" : "Subscribe"}
         </button>
